@@ -10,10 +10,10 @@ inputs:
   cluster:
     description: "The name of the ECS service's cluster.  Will default to the 'default' cluster"
     required: true
-  subnets:
+  subnet:
     description: "The subnets that the ECS task will belong with."
     required: true
-  security-groups:
+  security-group:
     description: "The security group that the ECS task will belong with."
 outputs:
   task-definition-arn:

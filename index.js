@@ -129,8 +129,8 @@ async function run() {
     // Get inputs
     const taskDefinitionFile = core.getInput('task-definition', { required: true });
     const cluster = core.getInput('cluster', { required: true });
-    const subnets = core.getInput('subnets', { required: true });
-    const securityGroups = core.getInput('security-groups', { required: true });
+    const subnets = core.getInput('subnet', { required: true });
+    const securityGroups = core.getInput('security-group', { required: true });
 
     // Register the task definition
     core.debug('Registering the task definition');
