@@ -27,7 +27,7 @@ async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
         securityGroups: [securityGroup],
       },
     }
-  });
+  }).promise();
 
   core.info(JSON.stringify(response));
 }
