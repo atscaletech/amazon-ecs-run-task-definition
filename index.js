@@ -20,6 +20,7 @@ async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
   const response = await ecs.runTask({
     cluster,
     taskDefinition: taskDefArn,
+    launchType: 'FARGATE',
     networkConfiguration: {
       awsvpcConfiguration: {
         subnets: [subnet],
