@@ -16,15 +16,15 @@ const IGNORED_TASK_DEFINITION_ATTRIBUTES = [
   'registeredBy'
 ];
 
-async function runEcsTask(ecs, taskDefArn, cluster, subnets, securityGroups) {
+async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
   await ecs.runTask({
     cluster,
     taskDefinition: taskDefArn,
     networkConfiguration: {
       awsvpcConfiguration: {
-        subnets: subnets,
+        subnets: [subnet],
         assignPublicIp: true,
-        securityGroups: securityGroups,
+        securityGroups: [securityGroup],
       },
     }
   });
@@ -129,8 +129,8 @@ async function run() {
     // Get inputs
     const taskDefinitionFile = core.getInput('task-definition', { required: true });
     const cluster = core.getInput('cluster', { required: true });
-    const subnets = core.getInput('subnet', { required: true });
-    const securityGroups = core.getInput('security-group', { required: true });
+    const subnet = core.getInput('subnet', { required: true });
+    const securityGroup = core.getInput('security-group', { required: true });
 
     // Register the task definition
     core.debug('Registering the task definition');
@@ -152,7 +152,7 @@ async function run() {
     core.setOutput('task-definition-arn', taskDefArn);
 
     core.info('Running the task');
-    await runEcsTask(ecs, taskDefArn, cluster, subnets, securityGroups);
+    await runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup);
   }
   catch (error) {
     core.setFailed(error.message);
