@@ -17,8 +17,6 @@ const IGNORED_TASK_DEFINITION_ATTRIBUTES = [
 ];
 
 async function runEcsTask(ecs, taskDefArn, cluster, subnets, securityGroups) {
-  core.info('Running the task');
-
   await ecs.runTask({
     cluster,
     taskDefinition: taskDefArn,
@@ -127,9 +125,6 @@ async function run() {
     const ecs = new aws.ECS({
       customUserAgent: 'amazon-ecs-run-task-definition-for-github-actions'
     });
-    const codedeploy = new aws.CodeDeploy({
-      customUserAgent: 'amazon-ecs-run-task-definition-for-github-actions'
-    });
 
     // Get inputs
     const taskDefinitionFile = core.getInput('task-definition', { required: true });
@@ -156,6 +151,7 @@ async function run() {
     const taskDefArn = registerResponse.taskDefinition.taskDefinitionArn;
     core.setOutput('task-definition-arn', taskDefArn);
 
+    core.info('Running the task');
     await runEcsTask(ecs, taskDefArn, cluster, subnets, securityGroups);
   }
   catch (error) {
