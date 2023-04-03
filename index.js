@@ -23,7 +23,7 @@ async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
     networkConfiguration: {
       awsvpcConfiguration: {
         subnets: [subnet],
-        assignPublicIp: true,
+        assignPublicIp: 'ENABLED',
         securityGroups: [securityGroup],
       },
     }
