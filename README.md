@@ -1,4 +1,4 @@
-## Amazon ECS "Deploy Task Definition" Action for GitHub Actions
+## Amazon ECS "Run task by task definition" Action for GitHub Actions
 
 Registers an Amazon ECS task definition and deploys it to an ECS service.
 
@@ -11,7 +11,6 @@ Registers an Amazon ECS task definition and deploys it to an ECS service.
     + [Task definition container image values](#task-definition-container-image-values)
 - [Credentials and Region](#credentials-and-region)
 - [Permissions](#permissions)
-- [AWS CodeDeploy Support](#aws-codedeploy-support)
 - [Troubleshooting](#troubleshooting)
 - [License Summary](#license-summary)
 - [Security Disclosures](#security-disclosures)
@@ -25,9 +24,9 @@ Registers an Amazon ECS task definition and deploys it to an ECS service.
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: task-definition.json
-        service: my-service
         cluster: my-cluster
-        wait-for-service-stability: true
+        subnets: [subnet-1, subnet-2]
+        security-groups: [default-security-group]
 ```
 
 See [action.yml](action.yml) for the full documentation for this action's inputs and outputs.
@@ -93,13 +92,13 @@ The task definition file can be updated prior to deployment with the new contain
         container-name: my-container
         image: ${{ steps.build-image.outputs.image }}
 
-    - name: Deploy Amazon ECS task definition
+    - name: Run Amazon ECS task
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: my-service
         cluster: my-cluster
-        wait-for-service-stability: true
+        subnets: [subnet-1, subnet-2]
+        security-groups: [default-security-group]
 ```
 
 ## Credentials and Region
