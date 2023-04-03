@@ -17,7 +17,7 @@ const IGNORED_TASK_DEFINITION_ATTRIBUTES = [
 ];
 
 async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
-  await ecs.runTask({
+  const response = await ecs.runTask({
     cluster,
     taskDefinition: taskDefArn,
     networkConfiguration: {
@@ -28,6 +28,8 @@ async function runEcsTask(ecs, taskDefArn, cluster, subnet, securityGroup) {
       },
     }
   });
+
+  core.info(JSON.stringify(response));
 }
 
 function isEmptyValue(value) {
